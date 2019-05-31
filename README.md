@@ -1,2 +1,2 @@
 # Sunshine
-自己对jdbc的一些封装
+对jdbc的一些封装
