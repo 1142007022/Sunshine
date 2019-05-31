@@ -1,6 +1,6 @@
 package com.jiangdong.sunshine.factory;
 
-import com.jiangdong.sunshine.ImplementFactory.InsertFactory;
+import com.jiangdong.sunshine.Implement.InsertFactory;
 import com.jiangdong.sunshine.annotation.Insert;
 import com.jiangdong.sunshine.annotation.Operation;
 import com.jiangdong.sunshine.config.DBInit;
@@ -9,7 +9,6 @@ import com.jiangdong.sunshine.enums.OperationTypes;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 public class ProxyFactory implements InvocationHandler {
 

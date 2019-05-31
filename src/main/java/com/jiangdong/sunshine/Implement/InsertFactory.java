@@ -1,4 +1,4 @@
-package com.jiangdong.sunshine.ImplementFactory;
+package com.jiangdong.sunshine.Implement;
 
 import com.jiangdong.sunshine.annotation.Insert;
 
