@@ -1,30 +1,47 @@
 package com.jiangdong.sunshine.factory;
 
+import com.jiangdong.sunshine.ImplementFactory.InsertFactory;
 import com.jiangdong.sunshine.annotation.Insert;
+import com.jiangdong.sunshine.annotation.Operation;
+import com.jiangdong.sunshine.config.DBInit;
+import com.jiangdong.sunshine.enums.OperationTypes;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class ProxyFactory implements InvocationHandler {
 
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args)throws Throwable {
-        System.out.println("接口方法调用开始");
-        //执行方法
-        if (method.getAnnotation(Insert.class) != null){
-            String sql = method.getAnnotation(Insert.class).sql();
-            String id = method.getAnnotation(Insert.class).id();
-            System.out.println("sql:" + sql);
-            System.out.println("id:" + id);
-        }
+    private static DBInit dbInit = DBInit.getDBInit();
+    private static Connection connection;
+    private static InsertFactory insertFactory = new InsertFactory();
 
-        System.out.println("接口方法调用结束");
-        return "调用返回值";
+    static {
+        connection = dbInit.getConnection();
+        InsertFactory.connection = connection;
     }
 
-    /*public static void main(String[] args){
-        TestMapper testMapper = MapperFactory.getMapper(TestMapper.class);
-        testMapper.insert();
-    }*/
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+
+        if (method.getAnnotation(Insert.class) != null) {
+            if (method.getAnnotation(Operation.class) != null){
+                Operation operation = method.getAnnotation(Operation.class);
+                if (operation.value().equals(OperationTypes.INSERT)){
+                    return insertFactory.insertOne(proxy,method,args);
+                }
+            }
+        }
+
+        if (method.getAnnotation(Operation.class) != null){
+            Operation operation = method.getAnnotation(Operation.class);
+            if (operation.value().equals(OperationTypes.INSERT_BATCH)){
+                return insertFactory.insertBatch(proxy,method,args);
+            }
+        }
+
+        return null;
+    }
 
 }
