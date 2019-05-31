@@ -8,6 +8,4 @@ import java.lang.annotation.*;
 @Documented
 public @interface Rollback {
 
-    Class value() default Exception.class;
-
 }

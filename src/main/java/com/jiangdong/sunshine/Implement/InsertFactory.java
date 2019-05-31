@@ -1,6 +1,7 @@
 package com.jiangdong.sunshine.Implement;
 
 import com.jiangdong.sunshine.annotation.Insert;
+import com.jiangdong.sunshine.annotation.Rollback;
 
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -11,13 +12,44 @@ public class InsertFactory {
 
     public static Connection connection;
 
-    public boolean insertOne(Object proxy, Method method, Object[] args) throws SQLException {
+    public boolean insertOne(Object proxy, Method method, Object[] args) {
         String sql = method.getAnnotation(Insert.class).sql();
-        PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
-        for (int i = 0; i < args.length; i++) {
-            preparedStatement.setObject(i + 1, args[i]);
+        if (method.getAnnotation(Rollback.class) != null) {
+            try {
+                PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+                for (int i = 0; i < args.length; i++) {
+                    preparedStatement.setObject(i + 1, args[i]);
+                }
+                Boolean result = preparedStatement.execute();
+                if (result) {
+                    connection.commit();
+                    return true;
+                } else {
+                    connection.rollback();
+                    return false;
+                }
+            } catch (SQLException e) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                connection.setAutoCommit(true);
+                PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+                for (int i = 0; i < args.length; i++) {
+                    preparedStatement.setObject(i + 1, args[i]);
+                }
+                return preparedStatement.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return preparedStatement.execute();
+
+        return true;
     }
 
 
