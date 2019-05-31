@@ -25,12 +25,7 @@ public class ProxyFactory implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
         if (method.getAnnotation(Insert.class) != null) {
-            if (method.getAnnotation(Operation.class) != null){
-                Operation operation = method.getAnnotation(Operation.class);
-                if (operation.value().equals(OperationTypes.INSERT)){
-                    return insertFactory.insertOne(proxy,method,args);
-                }
-            }
+            return insertFactory.insertOne(proxy,method,args);
         }
 
         if (method.getAnnotation(Operation.class) != null){

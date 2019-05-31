@@ -9,7 +9,6 @@ import com.jiangdong.sunshine.enums.OperationTypes;
 public interface TestMapper {
 
     @Rollback
-    @Operation(OperationTypes.INSERT)
     @Insert(id = "233",sql = "insert into test (name) value (?)")
     void insert(String name);
 
