@@ -17,7 +17,7 @@ public class SelectFactory {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             if (CollectionUtils.isNotEmpty(params)) {
-                for (int i = 0; i < params.size() - 1; i++) {
+                for (int i = 0; i < params.size(); i++) {
                     preparedStatement.setObject(i + 1, params.get(i));
                 }
             }
