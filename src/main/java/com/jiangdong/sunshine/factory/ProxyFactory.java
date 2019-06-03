@@ -17,14 +17,12 @@ import java.util.List;
 public class ProxyFactory implements InvocationHandler {
 
     private static DBInit dbInit = DBInit.getDBInit();
-    private static Connection connection;
     private static InsertFactory insertFactory = new InsertFactory();
     private static SelectFactory selectFactory = new SelectFactory();
 
     static {
-        connection = dbInit.getConnection();
-        InsertFactory.connection = connection;
-        SelectFactory.connection = connection;
+        InsertFactory.connection = dbInit.getConnection();
+        SelectFactory.connection = dbInit.getConnection();
     }
 
     @Override
