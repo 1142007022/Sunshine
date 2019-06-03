@@ -13,6 +13,10 @@ public class CollectionUtils {
         return (map == null || map.isEmpty());
     }
 
+    public static boolean isNotEmpty(Map<?, ?> map){
+        return !isEmpty(map);
+    }
+
     public static boolean isNotEmpty(Collection<?> collection) {
         return !isEmpty(collection);
     }
