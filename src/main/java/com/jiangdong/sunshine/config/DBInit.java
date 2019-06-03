@@ -65,7 +65,6 @@ public class DBInit {
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
-            conn.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package com.jiangdong.mapper;
 
+import com.jiangdong.entity.Test;
 import com.jiangdong.sunshine.annotation.*;
 import com.jiangdong.sunshine.enums.OperationTypes;
 import com.jiangdong.sunshine.result.RowMapper;
@@ -15,8 +16,9 @@ public interface TestMapper {
     @Operation(OperationTypes.INSERT_BATCH)
     void insertBatch(@BatchInsertSql String sql);
 
-    @Select(id = "234", sql = "")
-    @Operation(OperationTypes.SELECT_LIST)
+    @Select(id = "234", sql = "select * from test")
     <T> List<T> queryForObject(List<Object> params, RowMapper<T> rowMapper);
 
+    @Select(id = "23",sql = "select * from test where age = ?")
+    List<Test> queryTest1(List<Object> params,RowMapper<Test> rowMapper);
 }

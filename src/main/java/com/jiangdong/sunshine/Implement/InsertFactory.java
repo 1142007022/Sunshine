@@ -17,6 +17,7 @@ public class InsertFactory {
         String sql = method.getAnnotation(Insert.class).sql();
         if (method.getAnnotation(Rollback.class) != null) {
             try {
+                connection.setAutoCommit(false);
                 PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
                 for (int i = 0; i < args.length; i++) {
                     preparedStatement.setObject(i + 1, args[i]);
@@ -39,7 +40,6 @@ public class InsertFactory {
             }
         } else {
             try {
-                connection.setAutoCommit(true);
                 PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
                 for (int i = 0; i < args.length; i++) {
                     preparedStatement.setObject(i + 1, args[i]);
