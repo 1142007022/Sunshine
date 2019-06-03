@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultBaseRowMapper<T> implements BaseRowMapper {
+public class DefaultRowMapper<T> implements BaseRowMapper {
 
     private Class clazz;
 
-    public DefaultBaseRowMapper(Class clazz) {
+    public DefaultRowMapper(Class clazz) {
         this.clazz = clazz;
     }
 
