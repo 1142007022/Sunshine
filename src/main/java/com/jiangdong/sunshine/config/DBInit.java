@@ -1,10 +1,13 @@
 package com.jiangdong.sunshine.config;
 
-import com.jiangdong.sunshine.annotation.Column;
+import com.jiangdong.sunshine.exception.SunshineConfigException;
+import com.jiangdong.sunshine.exception.SunShineBaseException;
+import com.jiangdong.sunshine.exception.SunshineSQLException;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,12 +31,10 @@ public class DBInit {
             URL = prop.getProperty("jdbc.url");
             NAME = prop.getProperty("jdbc.username");
             PASSWORD = prop.getProperty("jdbc.password");
+        } catch (FileNotFoundException e) {
+            throw new SunshineConfigException("配置文件不存在!", e);
         } catch (IOException e) {
-            try {
-                throw new Exception("数据库连接异常", e);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            throw new SunShineBaseException("数据库连接异常", e);
         }
         // 数据库连接的配置
         dataSource.setDriverClassName(DRIVER);
@@ -63,13 +64,11 @@ public class DBInit {
     }
 
     public Connection getConnection() {
-        Connection conn = null;
         try {
-            conn = dataSource.getConnection();
+            return dataSource.getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SunshineSQLException(e.getMessage(), e);
         }
-        return conn;
     }
 
 }
