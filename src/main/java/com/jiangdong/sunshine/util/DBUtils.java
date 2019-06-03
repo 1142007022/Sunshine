@@ -12,4 +12,9 @@ public class DBUtils {
     public static void closeConnection(Connection connection) throws SQLException {
         connection.close();
     }
+
+    public static Connection getConnection() {
+        return dbInit.getConnection();
+    }
+
 }

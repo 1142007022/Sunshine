@@ -12,7 +12,7 @@ public class DefaultBaseRowMapper<T> implements BaseRowMapper {
 
     private Class clazz;
 
-    public DefaultBaseRowMapper(Class clazz){
+    public DefaultBaseRowMapper(Class clazz) {
         this.clazz = clazz;
     }
 
@@ -20,18 +20,18 @@ public class DefaultBaseRowMapper<T> implements BaseRowMapper {
     public List mapRow(ResultSet resultSet) {
         try {
             List<T> result = new ArrayList<>();
-            while (resultSet.next() || resultSet.isLast()){
-                T object = (T)clazz.newInstance();
+            while (resultSet.next() || resultSet.isLast()) {
+                T object = (T) clazz.newInstance();
                 Field[] fields = clazz.getDeclaredFields();
-                for (Field field : fields){
+                for (Field field : fields) {
                     field.setAccessible(true);
-                    if (field.getAnnotation(Column.class) != null){
+                    if (field.getAnnotation(Column.class) != null) {
                         Column column = field.getAnnotation(Column.class);
                         Object param = resultSet.getObject(column.value());
-                        field.set(object,param);
-                    }else {
+                        field.set(object, param);
+                    } else {
                         Object param = resultSet.getObject(field.getName());
-                        field.set(object,param);
+                        field.set(object, param);
                     }
                 }
                 result.add(object);

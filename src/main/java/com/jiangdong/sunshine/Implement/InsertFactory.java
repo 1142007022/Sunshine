@@ -13,7 +13,7 @@ import java.sql.Statement;
 public class InsertFactory {
 
     public boolean insertOne(Object proxy, Method method, Object[] args) throws SQLException {
-        Connection connection = DBUtils.dbInit.getConnection();
+        Connection connection = DBUtils.getConnection();
         String sql = method.getAnnotation(Insert.class).sql();
         if (method.getAnnotation(Rollback.class) != null) {
             try {
@@ -49,7 +49,7 @@ public class InsertFactory {
     }
 
     public Object insertBatch(Object proxy, Method method, Object[] args) throws SQLException {
-        Connection connection = DBUtils.dbInit.getConnection();
+        Connection connection = DBUtils.getConnection();
         String sql = (String) args[0];
         if (method.getAnnotation(Rollback.class) != null) {
             try {

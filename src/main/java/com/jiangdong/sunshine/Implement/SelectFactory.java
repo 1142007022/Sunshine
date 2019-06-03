@@ -13,7 +13,7 @@ import java.util.List;
 public class SelectFactory {
 
     public <T> List<T> select(String sql, List<Object> params, BaseRowMapper baseRowMapper) {
-        Connection connection = DBUtils.dbInit.getConnection();
+        Connection connection = DBUtils.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             if (CollectionUtils.isNotEmpty(params)) {
