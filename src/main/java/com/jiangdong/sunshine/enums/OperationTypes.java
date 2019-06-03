@@ -10,5 +10,7 @@ public enum  OperationTypes {
 
     SELECT,
 
-    INSERT_BATCH;
+    INSERT_BATCH,
+
+    SELECT_LIST
 }

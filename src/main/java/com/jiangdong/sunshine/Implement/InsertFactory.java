@@ -55,13 +55,13 @@ public class InsertFactory {
 
     public Object insertBatch(Object proxy, Method method, Object[] args) {
         String sql = (String) args[0];
-        if (method.getAnnotation(Rollback.class) != null){
+        if (method.getAnnotation(Rollback.class) != null) {
             try {
                 connection.setAutoCommit(false);
                 Statement statement = connection.createStatement();
                 statement.execute(sql);
                 connection.commit();
-            }catch (Exception e){
+            } catch (Exception e) {
                 try {
                     connection.rollback();
                     return false;
@@ -70,7 +70,7 @@ public class InsertFactory {
                 }
             }
 
-        }else {
+        } else {
             try {
                 Statement statement = connection.createStatement();
                 return statement.execute(sql);

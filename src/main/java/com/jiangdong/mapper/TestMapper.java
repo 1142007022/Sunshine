@@ -4,6 +4,8 @@ import com.jiangdong.sunshine.annotation.*;
 import com.jiangdong.sunshine.enums.OperationTypes;
 import com.jiangdong.sunshine.result.RowMapper;
 
+import java.util.List;
+
 public interface TestMapper {
 
     @Rollback
@@ -14,6 +16,7 @@ public interface TestMapper {
     void insertBatch(@BatchInsertSql String sql);
 
     @Select(id = "234", sql = "")
-    <T> T queryForObject(String sql, RowMapper<T> rowMapper);
+    @Operation(OperationTypes.SELECT_LIST)
+    <T> T queryForObject(List<Object> params, RowMapper<T> rowMapper);
 
 }

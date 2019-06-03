@@ -3,12 +3,15 @@ package com.jiangdong.sunshine.factory;
 import com.jiangdong.sunshine.Implement.InsertFactory;
 import com.jiangdong.sunshine.annotation.Insert;
 import com.jiangdong.sunshine.annotation.Operation;
+import com.jiangdong.sunshine.annotation.Select;
 import com.jiangdong.sunshine.config.DBInit;
 import com.jiangdong.sunshine.enums.OperationTypes;
+import com.jiangdong.sunshine.result.RowMapper;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.util.List;
 
 public class ProxyFactory implements InvocationHandler {
 
@@ -32,6 +35,19 @@ public class ProxyFactory implements InvocationHandler {
             Operation operation = method.getAnnotation(Operation.class);
             if (operation.value().equals(OperationTypes.INSERT_BATCH)){
                 return insertFactory.insertBatch(proxy,method,args);
+            }
+        }
+
+        if (method.getAnnotation(Select.class) != null){
+            Select select = method.getAnnotation(Select.class);
+            String sql = select.sql();//sql
+            List<Object> params = (List<Object>) args[0];//参数集合
+            RowMapper rowMapper = (RowMapper) args[args.length - 1];//rowMapper
+            Operation operation = method.getAnnotation(Operation.class);
+            if (operation != null && operation.value().equals(OperationTypes.SELECT_LIST)){
+                //批量查询
+            }else {
+                //单个查询
             }
         }
 
