@@ -17,6 +17,6 @@ public interface TestMapper {
 
     @Select(id = "234", sql = "")
     @Operation(OperationTypes.SELECT_LIST)
-    <T> T queryForObject(List<Object> params, RowMapper<T> rowMapper);
+    <T> List<T> queryForObject(List<Object> params, RowMapper<T> rowMapper);
 
 }

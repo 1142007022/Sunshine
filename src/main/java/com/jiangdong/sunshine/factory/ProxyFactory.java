@@ -1,5 +1,6 @@
 package com.jiangdong.sunshine.factory;
 
+import com.jiangdong.entity.Test;
 import com.jiangdong.sunshine.Implement.InsertFactory;
 import com.jiangdong.sunshine.annotation.Insert;
 import com.jiangdong.sunshine.annotation.Operation;
