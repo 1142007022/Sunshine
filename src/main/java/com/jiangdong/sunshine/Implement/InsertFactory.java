@@ -2,6 +2,7 @@ package com.jiangdong.sunshine.Implement;
 
 import com.jiangdong.sunshine.annotation.Insert;
 import com.jiangdong.sunshine.annotation.Rollback;
+import com.jiangdong.sunshine.util.DBUtils;
 
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -11,63 +12,57 @@ import java.sql.Statement;
 
 public class InsertFactory {
 
-    public static Connection connection;
-
-    public boolean insertOne(Object proxy, Method method, Object[] args) {
+    public boolean insertOne(Object proxy, Method method, Object[] args) throws SQLException {
+        Connection connection = DBUtils.dbInit.getConnection();
         String sql = method.getAnnotation(Insert.class).sql();
         if (method.getAnnotation(Rollback.class) != null) {
             try {
                 connection.setAutoCommit(false);
-                PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 for (int i = 0; i < args.length; i++) {
                     preparedStatement.setObject(i + 1, args[i]);
                 }
-                Boolean result = preparedStatement.execute();
-                if (result) {
-                    connection.commit();
-                    return true;
-                } else {
-                    connection.rollback();
-                    return false;
-                }
+                preparedStatement.execute();
+                connection.commit();
+                return true;
             } catch (SQLException e) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                connection.rollback();
                 e.printStackTrace();
+            } finally {
+                DBUtils.closeConnection(connection);
             }
         } else {
             try {
-                PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 for (int i = 0; i < args.length; i++) {
                     preparedStatement.setObject(i + 1, args[i]);
                 }
                 return preparedStatement.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                DBUtils.closeConnection(connection);
             }
         }
 
         return true;
     }
 
-    public Object insertBatch(Object proxy, Method method, Object[] args) {
+    public Object insertBatch(Object proxy, Method method, Object[] args) throws SQLException {
+        Connection connection = DBUtils.dbInit.getConnection();
         String sql = (String) args[0];
         if (method.getAnnotation(Rollback.class) != null) {
             try {
                 connection.setAutoCommit(false);
-                Statement statement = connection.createStatement();
-                statement.execute(sql);
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.execute(sql);
                 connection.commit();
+                return true;
             } catch (Exception e) {
-                try {
-                    connection.rollback();
-                    return false;
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                connection.rollback();
+                return false;
+            } finally {
+                DBUtils.closeConnection(connection);
             }
 
         } else {
@@ -76,6 +71,8 @@ public class InsertFactory {
                 return statement.execute(sql);
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                DBUtils.closeConnection(connection);
             }
         }
 
