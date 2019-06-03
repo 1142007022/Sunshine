@@ -20,16 +20,16 @@ public class AppTest {
         TestMapper testMapper = MapperFactory.getMapper(TestMapper.class);
         List<Object> params = new ArrayList();
         params.add(34);
-        List<com.jiangdong.entity.Test> testList = testMapper.queryForObject(params,new DefaultBaseRowMapper<com.jiangdong.entity.Test>(com.jiangdong.entity.Test.class));
-        for (com.jiangdong.entity.Test test : testList){
+        List<com.jiangdong.entity.Test> testList = testMapper.queryForObject(params, new DefaultBaseRowMapper<com.jiangdong.entity.Test>(com.jiangdong.entity.Test.class));
+        for (com.jiangdong.entity.Test test : testList) {
             System.out.println(test.getName());
         }
     }
 
     @Test
-    public void insertTest(){
+    public void insertTest() {
         TestMapper testMapper = MapperFactory.getMapper(TestMapper.class);
-        boolean res = testMapper.insert("test_insert","23");
+        boolean res = testMapper.insert("test_insert", "23");
         System.out.println(res);
     }
 }

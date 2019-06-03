@@ -17,6 +17,6 @@ public interface TestMapper extends BaseMapper {
     @Operation(OperationTypes.INSERT_BATCH)
     void insertBatch(@BatchInsertSql String sql);
 
-    @Select(id = "23", sql = "select * from test where age = ?")
+    @Select(id = "23", sql = "select * from test where test_age = ?")
     List<Test> queryForObject(@Param List<Object> params, @RowMapper BaseRowMapper<Test> baseRowMapper);
 }

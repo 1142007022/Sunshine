@@ -1,5 +1,7 @@
 package com.jiangdong.sunshine.result;
 
+import com.jiangdong.sunshine.annotation.Column;
+
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,8 +25,14 @@ public class DefaultBaseRowMapper<T> implements BaseRowMapper {
                 Field[] fields = clazz.getDeclaredFields();
                 for (Field field : fields){
                     field.setAccessible(true);
-                    Object param = resultSet.getObject(field.getName());
-                    field.set(object,param);
+                    if (field.getAnnotation(Column.class) != null){
+                        Column column = field.getAnnotation(Column.class);
+                        Object param = resultSet.getObject(column.value());
+                        field.set(object,param);
+                    }else {
+                        Object param = resultSet.getObject(field.getName());
+                        field.set(object,param);
+                    }
                 }
                 result.add(object);
             }

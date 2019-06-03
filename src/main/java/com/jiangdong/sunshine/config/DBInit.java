@@ -1,5 +1,6 @@
 package com.jiangdong.sunshine.config;
 
+import com.jiangdong.sunshine.annotation.Column;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
