@@ -23,7 +23,6 @@ public class DBInit {
     private static BasicDataSource dataSource = new BasicDataSource();
     private static Properties prop = new Properties();
 
-    // 静态代码块 只执行一次 数据库连接池只进行一次连接
     static {
         try {
             prop.load(new FileInputStream("src/main/resources/config.properties"));
@@ -36,7 +35,6 @@ public class DBInit {
         } catch (IOException e) {
             throw new SunShineBaseException("数据库连接异常", e);
         }
-        // 数据库连接的配置
         dataSource.setDriverClassName(DRIVER);
         dataSource.setUrl(URL);
         dataSource.setUsername(NAME);
