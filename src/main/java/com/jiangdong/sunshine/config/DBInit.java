@@ -41,7 +41,7 @@ public class DBInit {
         dataSource.setPassword(PASSWORD);
 
         dataSource.setInitialSize(5);
-        dataSource.setMaxIdle(20);
+        dataSource.setMaxIdle(25);
         dataSource.setMinIdle(5);
         dataSource.setMaxWaitMillis(5000);
     }
