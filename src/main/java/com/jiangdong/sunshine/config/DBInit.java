@@ -19,6 +19,10 @@ public class DBInit {
     public static String URL;
     public static String NAME;
     public static String PASSWORD;
+    public static Integer maxIdle;
+    public static Integer minIdle;
+    public static Integer maxWaitMillis;
+    public static Integer initialSize;
 
     private static BasicDataSource dataSource = new BasicDataSource();
     private static Properties prop = new Properties();
@@ -30,6 +34,10 @@ public class DBInit {
             URL = prop.getProperty("jdbc.url");
             NAME = prop.getProperty("jdbc.username");
             PASSWORD = prop.getProperty("jdbc.password");
+            maxIdle = (Integer) prop.get("maxIdle");
+            minIdle = (Integer)prop.get("minIdle");
+            maxWaitMillis = (Integer)prop.get("maxWaitMillis");
+            initialSize = (Integer)prop.get("initialSize");
         } catch (FileNotFoundException e) {
             throw new SunshineConfigException("配置文件不存在!", e);
         } catch (IOException e) {
@@ -40,10 +48,10 @@ public class DBInit {
         dataSource.setUsername(NAME);
         dataSource.setPassword(PASSWORD);
 
-        dataSource.setInitialSize(5);
-        dataSource.setMaxIdle(25);
-        dataSource.setMinIdle(5);
-        dataSource.setMaxWaitMillis(5000);
+        dataSource.setInitialSize(initialSize);
+        dataSource.setMaxIdle(maxIdle);
+        dataSource.setMinIdle(minIdle);
+        dataSource.setMaxWaitMillis(maxWaitMillis);
     }
 
     private DBInit() {
