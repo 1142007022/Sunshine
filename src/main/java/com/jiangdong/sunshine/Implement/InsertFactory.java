@@ -48,9 +48,8 @@ public class InsertFactory {
         return true;
     }
 
-    public Object insertBatch(Object proxy, Method method, Object[] args) throws SQLException {
+    public Object insertBatch(Object proxy, Method method, Object[] args, String sql) throws SQLException {
         Connection connection = DBUtils.getConnection();
-        String sql = (String) args[0];
         if (method.getAnnotation(Rollback.class) != null) {
             try {
                 connection.setAutoCommit(false);
@@ -67,8 +66,8 @@ public class InsertFactory {
 
         } else {
             try {
-                Statement statement = connection.createStatement();
-                return statement.execute(sql);
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                return preparedStatement.execute(sql);
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {

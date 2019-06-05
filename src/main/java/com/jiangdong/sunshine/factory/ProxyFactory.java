@@ -18,11 +18,12 @@ public class ProxyFactory implements InvocationHandler {
 
     private static InsertFactory insertFactory = new InsertFactory();
     private static SelectFactory selectFactory = new SelectFactory();
-    private Map<String, Object> params = new LinkedHashMap();
+    protected Map<String, Object> params = new LinkedHashMap();
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
+        //将被代理方法的参数缓存起来--->method对象可获取参数名 尔args为参数实际值 两者长度一定相等
         Parameter[] parameters = method.getParameters();
         for (int i = 0; i < parameters.length; i++) {
             Parameter param = parameters[i];
@@ -43,7 +44,8 @@ public class ProxyFactory implements InvocationHandler {
         if (method.getAnnotation(Operation.class) != null) {
             Operation operation = method.getAnnotation(Operation.class);
             if (operation.value().equals(OperationTypes.INSERT_BATCH)) {
-                return insertFactory.insertBatch(proxy, method, args);
+                String sql = (String) params.get("sql");
+                return insertFactory.insertBatch(proxy, method, args, sql);
             }
         }
 
@@ -63,7 +65,6 @@ public class ProxyFactory implements InvocationHandler {
             }
             return selectFactory.select(sql, paramsList, baseRowMapper);
         }
-
         return null;
     }
 
