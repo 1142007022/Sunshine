@@ -18,7 +18,7 @@ public class ProxyFactory implements InvocationHandler {
 
     private static InsertFactory insertFactory = new InsertFactory();
     private static SelectFactory selectFactory = new SelectFactory();
-    private static Map<String, Object> params = new LinkedHashMap();
+    private Map<String, Object> params = new LinkedHashMap();
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
