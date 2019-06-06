@@ -1,5 +1,6 @@
 package com.jiangdong.sunshine.factory;
 
+import com.jiangdong.sunshine.Implement.DeleteFactory;
 import com.jiangdong.sunshine.Implement.InsertFactory;
 import com.jiangdong.sunshine.Implement.SelectFactory;
 import com.jiangdong.sunshine.annotation.*;
@@ -18,6 +19,7 @@ public class ProxyFactory implements InvocationHandler {
 
     private static InsertFactory insertFactory = new InsertFactory();
     private static SelectFactory selectFactory = new SelectFactory();
+    private static DeleteFactory deleteFactory = new DeleteFactory();
     protected Map<String, Object> params = new LinkedHashMap();
 
     @Override
@@ -64,6 +66,10 @@ public class ProxyFactory implements InvocationHandler {
                 }
             }
             return selectFactory.select(sql, paramsList, baseRowMapper);
+        }
+
+        if (method.getAnnotation(Delete.class) != null) {
+            return deleteFactory.delete(method, args);
         }
         return null;
     }
