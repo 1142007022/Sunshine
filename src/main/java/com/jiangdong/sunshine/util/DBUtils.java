@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class DBUtils {
 
-    public static DBInit dbInit = DBInit.getDBInit();
+    private static DBInit dbInit = DBInit.getDBInit();
 
     public static void closeConnection(Connection connection) throws SQLException {
         connection.close();
