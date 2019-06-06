@@ -39,9 +39,9 @@ public class DBInit {
             maxWaitMillis = (Integer)prop.get("maxWaitMillis");
             initialSize = (Integer)prop.get("initialSize");
         } catch (FileNotFoundException e) {
-            throw new SunshineConfigException("配置文件不存在!", e);
+            throw new SunshineConfigException("配置文件不存在!," + e.getMessage(), e);
         } catch (IOException e) {
-            throw new SunShineBaseException("数据库连接异常", e);
+            throw new SunShineBaseException("数据库连接异常:" + e.getMessage(), e);
         }
         dataSource.setDriverClassName(DRIVER);
         dataSource.setUrl(URL);
