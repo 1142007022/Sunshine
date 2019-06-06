@@ -8,8 +8,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface Delete {
 
-    String id();
-
     String sql();
 
 }

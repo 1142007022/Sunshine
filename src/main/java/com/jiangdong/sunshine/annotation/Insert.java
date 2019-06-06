@@ -9,8 +9,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface Insert {
 
-    String id();
-
     String sql();
 
 }

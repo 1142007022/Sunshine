@@ -8,8 +8,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface Select {
 
-    String id();
-
     String sql();
 
 }
