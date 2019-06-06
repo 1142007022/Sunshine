@@ -17,33 +17,24 @@ public class DefaultRowMapper<T> implements BaseRowMapper {
     }
 
     @Override
-    public List mapRow(ResultSet resultSet) {
-        try {
-            List<T> result = new ArrayList<>();
-            while (resultSet.next() || resultSet.isLast()) {
-                T object = (T) clazz.newInstance();
-                Field[] fields = clazz.getDeclaredFields();
-                for (Field field : fields) {
-                    field.setAccessible(true);
-                    if (field.getAnnotation(Column.class) != null) {
-                        Column column = field.getAnnotation(Column.class);
-                        Object param = resultSet.getObject(column.value());
-                        field.set(object, param);
-                    } else {
-                        Object param = resultSet.getObject(field.getName());
-                        field.set(object, param);
-                    }
+    public List mapRow(ResultSet resultSet) throws SQLException, IllegalAccessException, InstantiationException {
+        List<T> result = new ArrayList<>();
+        while (resultSet.next() || resultSet.isLast()) {
+            T object = (T) clazz.newInstance();
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                if (field.getAnnotation(Column.class) != null) {
+                    Column column = field.getAnnotation(Column.class);
+                    Object param = resultSet.getObject(column.value());
+                    field.set(object, param);
+                } else {
+                    Object param = resultSet.getObject(field.getName());
+                    field.set(object, param);
                 }
-                result.add(object);
             }
-            return result;
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            result.add(object);
         }
-        return null;
+        return result;
     }
 }

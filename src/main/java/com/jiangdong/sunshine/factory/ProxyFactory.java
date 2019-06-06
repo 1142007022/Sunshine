@@ -18,7 +18,7 @@ public class ProxyFactory implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
-        //将被代理方法的参数缓存起来--->method对象可获取参数名 尔args为参数实际值 两者长度一定相等
+        //将被代理方法的参数缓存起来--->method对象可获取参数名 而args为参数实际值 两者长度一定相等
         Parameter[] parameters = method.getParameters();
         for (int i = 0; i < parameters.length; i++) {
             Parameter param = parameters[i];
