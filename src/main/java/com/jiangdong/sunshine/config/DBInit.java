@@ -15,14 +15,14 @@ import java.util.Properties;
 
 public class DBInit {
 
-    public static String DRIVER;
-    public static String URL;
-    public static String NAME;
-    public static String PASSWORD;
-    public static Integer maxIdle;
-    public static Integer minIdle;
-    public static Integer maxWaitMillis;
-    public static Integer initialSize;
+    private static String DRIVER;
+    private static String URL;
+    private static String NAME;
+    private static String PASSWORD;
+    private static Integer maxIdle;
+    private static Integer minIdle;
+    private static Integer maxWaitMillis;
+    private static Integer initialSize;
 
     private static BasicDataSource dataSource = new BasicDataSource();
     private static Properties prop = new Properties();
