@@ -30,20 +30,22 @@ public class DBInit {
     static {
 
         try {
-            prop.load(new FileInputStream("src/main/resources/config.properties"));
-            DRIVER = prop.getProperty("jdbc.driver");
-            URL = prop.getProperty("jdbc.url");
-            NAME = prop.getProperty("jdbc.username");
-            PASSWORD = prop.getProperty("jdbc.password");
-            maxIdle = (Integer) prop.get("maxIdle");
-            minIdle = (Integer) prop.get("minIdle");
-            maxWaitMillis = (Integer) prop.get("maxWaitMillis");
-            initialSize = (Integer) prop.get("initialSize");
+            FileInputStream fileInputStream = new FileInputStream("src/main/resources/config.properties");
+            prop.load(fileInputStream);
         } catch (FileNotFoundException e) {
             throw new SunshineConfigException("配置文件不存在!," + e.getMessage(), e);
         } catch (IOException e) {
             throw new SunShineBaseException("数据库连接异常:" + e.getMessage(), e);
         }
+
+        DRIVER = prop.getProperty("jdbc.driver");
+        URL = prop.getProperty("jdbc.url");
+        NAME = prop.getProperty("jdbc.username");
+        PASSWORD = prop.getProperty("jdbc.password");
+        maxIdle = (Integer) prop.get("maxIdle");
+        minIdle = (Integer) prop.get("minIdle");
+        maxWaitMillis = (Integer) prop.get("maxWaitMillis");
+        initialSize = (Integer) prop.get("initialSize");
 
         dataSource.setDriverClassName(DRIVER);
         dataSource.setUrl(URL);
