@@ -6,6 +6,7 @@ import com.jiangdong.sunshine.exception.SunshineSQLException;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,12 +31,24 @@ public class DBInit {
     static {
 
         try {
-            FileInputStream fileInputStream = new FileInputStream("src/main/resources/config.properties");
-            prop.load(fileInputStream);
-        } catch (FileNotFoundException e) {
-            throw new SunshineConfigException("配置文件不存在!," + e.getMessage(), e);
+
+            File config = new File("src/main/resources/config.properties");
+            File sunshine = new File("src/main/resources/sunshine.properties");
+
+            if (config.exists()){
+                FileInputStream fileInputStream = new FileInputStream(config);
+                prop.load(fileInputStream);
+            }else if (sunshine.exists()){
+                FileInputStream fileInputStream = new FileInputStream(config);
+                prop.load(fileInputStream);
+            }else {
+                throw new SunshineConfigException();
+            }
+
+        } catch (SunshineConfigException e) {
+            throw new SunshineConfigException("配置文件不存在或命名有误," + e.getMessage(), e);
         } catch (IOException e) {
-            throw new SunShineBaseException("数据库连接异常:" + e.getMessage(), e);
+            throw new SunShineBaseException("配置文件加载异常," + e.getMessage(), e);
         }
 
         DRIVER = prop.getProperty("jdbc.driver");

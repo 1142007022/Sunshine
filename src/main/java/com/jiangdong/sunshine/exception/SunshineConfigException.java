@@ -10,4 +10,8 @@ public class SunshineConfigException extends SunShineBaseException {
         super(message, cause);
     }
 
+    public SunshineConfigException(){
+
+    }
+
 }
