@@ -13,9 +13,9 @@ import java.util.Map;
 
 public class BaseFactory {
 
-    private static InsertFactory insertFactory = new InsertFactory();
-    private static SelectFactory selectFactory = new SelectFactory();
-    private static DeleteFactory deleteFactory = new DeleteFactory();
+    protected static InsertFactory insertFactory = new InsertFactory();
+    protected static SelectFactory selectFactory = new SelectFactory();
+    protected static DeleteFactory deleteFactory = new DeleteFactory();
 
     public Object distribution(Object proxy, Method method, Object[] args, Map<String, Object> params) throws SQLException {
 
