@@ -12,12 +12,19 @@ public class DeleteFactory {
 
     public Object delete(Method method, Object[] args) throws SQLException {
         Connection connection = DBUtils.getConnection();
-        String sql = method.getAnnotation(Delete.class).sql();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        for (int i = 0; i < args.length; i++) {
-            preparedStatement.setObject(i + 1, args[i]);
+        try {
+            String sql = method.getAnnotation(Delete.class).sql();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                preparedStatement.setObject(i + 1, args[i]);
+            }
+            return preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeConnection(connection);
         }
-        return preparedStatement.execute();
+        return null;
     }
 
 }
