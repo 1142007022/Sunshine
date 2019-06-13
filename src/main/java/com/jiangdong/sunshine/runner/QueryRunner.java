@@ -17,12 +17,12 @@ public class QueryRunner implements SqlOperation {
 
     @Override
     public Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException {
-        throw new SunshineSQLException("执行了错误的错误的方法,请检查是否选错实现类.");
+        throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 
     @Override
     public Object executeBatch(Object proxy, Method method, Object[] args, String sql) throws SQLException {
-        throw new SunshineSQLException("执行了错误的错误的方法,请检查是否选错实现类.");
+        throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 public class ExecuteBatchRunner implements SqlOperation {
     @Override
     public Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException {
-        throw new SunshineSQLException("执行了错误的错误的方法,请检查是否选错实现类.");
+        throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 
     @Override
@@ -21,6 +21,6 @@ public class ExecuteBatchRunner implements SqlOperation {
 
     @Override
     public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper baseRowMapper) throws SQLException {
-        throw new SunshineSQLException("执行了错误的错误的方法,请检查是否选错实现类.");
+        throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 }
