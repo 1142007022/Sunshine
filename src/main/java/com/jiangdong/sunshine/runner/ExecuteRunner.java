@@ -1,8 +1,9 @@
-package com.jiangdong.sunshine.Implement;
+package com.jiangdong.sunshine.runner;
 
 import com.jiangdong.sunshine.annotation.Rollback;
 import com.jiangdong.sunshine.exception.SunshineSQLException;
 import com.jiangdong.sunshine.result.BaseRowMapper;
+import com.jiangdong.sunshine.sql.SqlOperation;
 import com.jiangdong.sunshine.util.DBUtils;
 
 import java.lang.reflect.Method;
@@ -11,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ExecuteFactory implements SqlOperation {
+public class ExecuteRunner implements SqlOperation {
 
     /**
      * @param proxy

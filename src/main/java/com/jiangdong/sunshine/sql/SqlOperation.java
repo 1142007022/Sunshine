@@ -1,4 +1,4 @@
-package com.jiangdong.sunshine.Implement;
+package com.jiangdong.sunshine.sql;
 
 import com.jiangdong.sunshine.result.BaseRowMapper;
 

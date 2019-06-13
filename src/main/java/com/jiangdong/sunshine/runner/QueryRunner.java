@@ -1,7 +1,8 @@
-package com.jiangdong.sunshine.Implement;
+package com.jiangdong.sunshine.runner;
 
 import com.jiangdong.sunshine.exception.SunshineSQLException;
 import com.jiangdong.sunshine.result.BaseRowMapper;
+import com.jiangdong.sunshine.sql.SqlOperation;
 import com.jiangdong.sunshine.util.CollectionUtils;
 import com.jiangdong.sunshine.util.DBUtils;
 
@@ -12,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class QueryFactory implements SqlOperation {
+public class QueryRunner implements SqlOperation {
 
     @Override
     public Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException {

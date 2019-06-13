@@ -1,6 +1,5 @@
 package com.jiangdong.sunshine.factory;
 
-import com.jiangdong.sunshine.Implement.BaseFactory;
 import com.jiangdong.sunshine.annotation.Param;
 import com.jiangdong.sunshine.annotation.RowMapper;
 

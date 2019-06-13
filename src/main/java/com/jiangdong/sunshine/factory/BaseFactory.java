@@ -1,7 +1,10 @@
-package com.jiangdong.sunshine.Implement;
+package com.jiangdong.sunshine.factory;
 
+import com.jiangdong.sunshine.runner.ExecuteRunner;
+import com.jiangdong.sunshine.runner.QueryRunner;
 import com.jiangdong.sunshine.annotation.*;
 import com.jiangdong.sunshine.result.BaseRowMapper;
+import com.jiangdong.sunshine.sql.SqlOperation;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -12,8 +15,8 @@ import java.util.Map;
 
 public class BaseFactory {
 
-    private static SqlOperation executeFactory = SqlOperationFactory.getOperation(ExecuteFactory.class);
-    private static SqlOperation queryFactory = SqlOperationFactory.getOperation(QueryFactory.class);
+    private static SqlOperation executeFactory = SqlOperationFactory.getOperation(ExecuteRunner.class);
+    private static SqlOperation queryFactory = SqlOperationFactory.getOperation(QueryRunner.class);
 
     public Object distribution(Object proxy, Method method, Object[] args, Map<String, Object> params) throws SQLException {
 
