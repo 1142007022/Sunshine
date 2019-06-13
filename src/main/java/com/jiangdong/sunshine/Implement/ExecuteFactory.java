@@ -1,19 +1,29 @@
 package com.jiangdong.sunshine.Implement;
 
-import com.jiangdong.sunshine.annotation.Insert;
 import com.jiangdong.sunshine.annotation.Rollback;
+import com.jiangdong.sunshine.exception.SunshineSQLException;
+import com.jiangdong.sunshine.result.BaseRowMapper;
 import com.jiangdong.sunshine.util.DBUtils;
 
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
-public class InsertFactory {
+public class ExecuteFactory implements SqlOperation {
 
-    public boolean insertOne(Object proxy, Method method, Object[] args) throws SQLException {
+    /**
+     * @param proxy
+     * @param method
+     * @param args   代理方法的所有参数 目前这么写明显死板且功能不全 后应加入批量操作  可改成将批量数据放到二维数组
+     * @param sql
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException {
         Connection connection = DBUtils.getConnection();
-        String sql = method.getAnnotation(Insert.class).sql();
         if (method.getAnnotation(Rollback.class) != null) {
             try {
                 connection.setAutoCommit(false);
@@ -37,37 +47,7 @@ public class InsertFactory {
                     preparedStatement.setObject(i + 1, args[i]);
                 }
                 return preparedStatement.execute();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                DBUtils.closeConnection(connection);
-            }
-        }
-
-        return true;
-    }
-
-    public Object insertBatch(Object proxy, Method method, Object[] args, String sql) throws SQLException {
-        Connection connection = DBUtils.getConnection();
-        if (method.getAnnotation(Rollback.class) != null) {
-            try {
-                connection.setAutoCommit(false);
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.execute(sql);
-                connection.commit();
-                return true;
             } catch (Exception e) {
-                connection.rollback();
-                return false;
-            } finally {
-                DBUtils.closeConnection(connection);
-            }
-
-        } else {
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                return preparedStatement.execute(sql);
-            } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
                 DBUtils.closeConnection(connection);
@@ -76,4 +56,15 @@ public class InsertFactory {
 
         return true;
     }
+
+    @Override
+    public Object executeBatch(Object proxy, Method method, Object[] args, String sql) throws SQLException {
+        throw new SunshineSQLException("执行了错误的错误的方法,请检查是否选错实现类.");
+    }
+
+    @Override
+    public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper baseRowMapper) {
+        throw new SunshineSQLException("执行了错误的错误的方法,请检查是否选错实现类.");
+    }
+
 }
