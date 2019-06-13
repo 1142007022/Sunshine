@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class ProxyFactory implements InvocationHandler {
 
-    private static BaseFactory baseFactory = new BaseFactory();
+    protected static BaseFactory baseFactory = new BaseFactory();
     protected Map<String, Object> params = new LinkedHashMap();
 
     @Override
