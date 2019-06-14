@@ -28,28 +28,39 @@ public class ExecuteBatchRunner implements SqlOperation {
         Object[][] batchParam = (Object[][]) params.get("batchParam");//实际参数值
         PreparedStatement prepareStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);//获取自增主键
         if (method.getAnnotation(Rollback.class) != null) {
-            connection.setAutoCommit(false);
-            for (int i = 0; i < batchParam.length; i++) {
-                this.fillStatement(prepareStatement, batchParam[i]);
-                prepareStatement.addBatch();
+            try {
+                executeBatch(methodParameters, batchParam, prepareStatement);
+                connection.commit();
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                DBUtils.closeConnection(connection);
             }
-            prepareStatement.executeBatch();
-            connection.commit();
             return true;
         } else {
-            for (Parameter parameter : methodParameters) {
-                if (parameter.getAnnotation(Param.class) != null) {
-                    for (int i = 0; i < batchParam.length; i++) {
-                        this.fillStatement(prepareStatement, batchParam[i]);
-                        prepareStatement.addBatch();
-                    }
-                    return prepareStatement.executeBatch();
-                } else {
-                    throw new SunshineSQLException("'batchParam' can not be empty!");
-                }
+            try {
+                executeBatch(methodParameters, batchParam, prepareStatement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                DBUtils.closeConnection(connection);
             }
         }
 
+        return null;
+    }
+
+    private Object executeBatch(Parameter[] methodParameters, Object[][] batchParam, PreparedStatement prepareStatement) throws SQLException {
+        for (Parameter parameter : methodParameters) {
+            if (parameter.getAnnotation(Param.class) != null) {
+                for (int i = 0; i < batchParam.length; i++) {
+                    this.fillStatement(prepareStatement, batchParam[i]);
+                    prepareStatement.addBatch();
+                }
+                return prepareStatement.executeBatch();
+            }
+        }
         return null;
     }
 
