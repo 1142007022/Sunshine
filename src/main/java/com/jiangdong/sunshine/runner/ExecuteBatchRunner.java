@@ -2,6 +2,7 @@ package com.jiangdong.sunshine.runner;
 
 import com.jiangdong.sunshine.annotation.Param;
 import com.jiangdong.sunshine.annotation.Rollback;
+import com.jiangdong.sunshine.exception.SunshineParameterException;
 import com.jiangdong.sunshine.exception.SunshineSQLException;
 import com.jiangdong.sunshine.result.BaseRowMapper;
 import com.jiangdong.sunshine.sql.SqlOperation;
@@ -57,7 +58,7 @@ public class ExecuteBatchRunner implements SqlOperation {
             if (params[i] != null) {
                 prepareStatement.setObject(i + 1, params[i]);
             } else {
-                throw new SunshineSQLException("insert batch fail!");
+                throw new SunshineParameterException("insert batch fail!batchParam can not have empty value!");
             }
         }
     }
