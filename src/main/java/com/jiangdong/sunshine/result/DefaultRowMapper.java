@@ -17,7 +17,7 @@ public class DefaultRowMapper<T> implements BaseRowMapper {
     }
 
     @Override
-    public List mapRow(ResultSet resultSet) throws SQLException, IllegalAccessException, InstantiationException {
+    public List<T> mapRow(ResultSet resultSet) throws SQLException, IllegalAccessException, InstantiationException {
         List<T> result = new ArrayList<>();
         while (resultSet.next() || resultSet.isLast()) {
             T object = (T) clazz.newInstance();
