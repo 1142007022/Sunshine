@@ -23,13 +23,12 @@ public class ExecuteBatchRunner implements SqlOperation {
 
     @Override
     public Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params) throws SQLException {
-        Parameter[] methodParameters = method.getParameters();
         Connection connection = DBUtils.getConnection();
         Object[][] batchParam = (Object[][]) params.get("batchParam");//实际参数值
         PreparedStatement prepareStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);//获取自增主键
         if (method.getAnnotation(Rollback.class) != null) {
             try {
-                executeBatch(methodParameters, batchParam, prepareStatement);
+                executeBatch(batchParam, prepareStatement);
                 connection.commit();
                 return true;
             } catch (SQLException e) {
@@ -40,7 +39,7 @@ public class ExecuteBatchRunner implements SqlOperation {
             return true;
         } else {
             try {
-                executeBatch(methodParameters, batchParam, prepareStatement);
+                executeBatch(batchParam, prepareStatement);
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
@@ -51,28 +50,24 @@ public class ExecuteBatchRunner implements SqlOperation {
         return null;
     }
 
-    private Object executeBatch(Parameter[] methodParameters, Object[][] batchParam, PreparedStatement prepareStatement) throws SQLException {
-        for (Parameter parameter : methodParameters) {
-            if (parameter.getAnnotation(Param.class) != null) {
-                for (int i = 0; i < batchParam.length; i++) {
-                    this.fillStatement(prepareStatement, batchParam[i]);
-                    prepareStatement.addBatch();
-                }
-                return prepareStatement.executeBatch();
-            }
+    private Object executeBatch(Object[][] batchParam, PreparedStatement prepareStatement) throws SQLException {
+        for (int i = 0; i < batchParam.length; i++) {
+            this.fillStatement(prepareStatement, batchParam[i]);
+            prepareStatement.addBatch();
         }
-        return null;
+        return prepareStatement.executeBatch();
     }
 
     private void fillStatement(PreparedStatement prepareStatement, Object[] params) throws SQLException {
-        for (int i = 0; i < params.length; i++) {
-            if (params[i] != null) {
+        if (params != null) {
+            for (int i = 0; i < params.length; i++) {
                 prepareStatement.setObject(i + 1, params[i]);
-            } else {
-                throw new SunshineParameterException("insert batch fail!'batchParam' can not have empty value!");
             }
+        }else {
+            throw new SunshineParameterException("insert batch fail!'batchParam' can not have empty value!");
         }
     }
+
 
     @Override
     public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper baseRowMapper) {
