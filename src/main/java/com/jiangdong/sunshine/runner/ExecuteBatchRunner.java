@@ -39,7 +39,7 @@ public class ExecuteBatchRunner implements SqlOperation {
             return true;
         } else {
             try {
-                executeBatch(batchParam, prepareStatement);
+                return executeBatch(batchParam, prepareStatement);
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
