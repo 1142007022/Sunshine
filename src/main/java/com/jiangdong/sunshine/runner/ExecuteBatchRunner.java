@@ -69,7 +69,7 @@ public class ExecuteBatchRunner implements SqlOperation {
             if (params[i] != null) {
                 prepareStatement.setObject(i + 1, params[i]);
             } else {
-                throw new SunshineParameterException("insert batch fail!batchParam can not have empty value!");
+                throw new SunshineParameterException("insert batch fail!'batchParam' can not have empty value!");
             }
         }
     }
