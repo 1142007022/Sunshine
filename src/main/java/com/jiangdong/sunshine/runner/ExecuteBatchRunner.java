@@ -1,6 +1,5 @@
 package com.jiangdong.sunshine.runner;
 
-import com.jiangdong.sunshine.annotation.Param;
 import com.jiangdong.sunshine.annotation.Rollback;
 import com.jiangdong.sunshine.exception.SunshineParameterException;
 import com.jiangdong.sunshine.exception.SunshineSQLException;
@@ -9,8 +8,10 @@ import com.jiangdong.sunshine.sql.SqlOperation;
 import com.jiangdong.sunshine.util.DBUtils;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
