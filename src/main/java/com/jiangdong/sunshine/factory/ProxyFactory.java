@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class ProxyFactory implements InvocationHandler {
 
-    protected static BaseFactory baseFactory = new BaseFactory();
-    protected Map<String, Object> params = new LinkedHashMap();
+    private static BaseFactory baseFactory = new BaseFactory();
+    private Map<String, Object> params = new LinkedHashMap();
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
