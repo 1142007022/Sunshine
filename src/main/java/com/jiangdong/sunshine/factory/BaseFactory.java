@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * \
+ */
 public class BaseFactory {
 
     private static SqlOperation executeRunner = SqlOperationFactory.getOperation(ExecuteRunner.class);
