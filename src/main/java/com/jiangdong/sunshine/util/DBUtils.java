@@ -31,4 +31,14 @@ public class DBUtils {
         }
     }
 
+    public static void connectionCommitAndClose(Connection connection) throws SQLException {
+        if (connection != null) {
+            try {
+                connection.commit();
+            } finally {
+                connection.close();
+            }
+        }
+    }
+
 }
