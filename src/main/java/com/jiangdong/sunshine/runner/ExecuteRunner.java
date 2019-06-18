@@ -18,7 +18,7 @@ public class ExecuteRunner implements SqlOperation {
     /**
      * @param proxy
      * @param method
-     * @param args   代理方法的所有参数 目前这么写明显死板且功能不全 后应加入批量操作  可改成将批量数据放到二维数组
+     * @param args
      * @param sql
      * @return
      * @throws SQLException
