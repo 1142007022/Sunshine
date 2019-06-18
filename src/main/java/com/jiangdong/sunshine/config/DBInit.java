@@ -35,13 +35,13 @@ public class DBInit {
             File config = new File("src/main/resources/config.properties");
             File sunshine = new File("src/main/resources/sunshine.properties");
 
-            if (config.exists()){
+            if (config.exists()) {
                 FileInputStream fileInputStream = new FileInputStream(config);
                 prop.load(fileInputStream);
-            }else if (sunshine.exists()){
+            } else if (sunshine.exists()) {
                 FileInputStream fileInputStream = new FileInputStream(config);
                 prop.load(fileInputStream);
-            }else {
+            } else {
                 throw new SunshineConfigException();
             }
 
@@ -55,10 +55,10 @@ public class DBInit {
         URL = prop.getProperty("jdbc.url");
         NAME = prop.getProperty("jdbc.username");
         PASSWORD = prop.getProperty("jdbc.password");
-        maxIdle = (Integer) prop.get("maxIdle");
-        minIdle = (Integer) prop.get("minIdle");
-        maxWaitMillis = (Integer) prop.get("maxWaitMillis");
-        initialSize = (Integer) prop.get("initialSize");
+        maxIdle = prop.get("maxIdle") != null ? (Integer) prop.get("maxIdle") : 20;
+        minIdle = prop.get("minIdle") != null ? (Integer) prop.get("minIdle") : 5;
+        maxWaitMillis = prop.get("maxWaitMillis") != null ? (Integer) prop.get("maxWaitMillis") : 5000;
+        initialSize = prop.get("initialSize") != null ? (Integer) prop.get("initialSize") : 5;
 
         dataSource.setDriverClassName(DRIVER);
         dataSource.setUrl(URL);
