@@ -71,7 +71,7 @@ public class ExecuteBatchRunner implements SqlOperation {
 
 
     @Override
-    public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper baseRowMapper) {
+    public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper<T> baseRowMapper) {
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 }

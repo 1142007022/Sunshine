@@ -28,18 +28,14 @@ public class QueryRunner implements SqlOperation {
 
     /**
      * @param sql
-     * @param paramsList
+     * @param params
      * @param baseRowMapper
      * @param <T>
      * @return 查询统一返回list 单个为list(0)
      * @throws SQLException
      */
     @Override
-    public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper baseRowMapper) throws SQLException {
-        return select(sql, paramsList, baseRowMapper);
-    }
-
-    private <T> List<T> select(String sql, List<Object> params, BaseRowMapper baseRowMapper) throws SQLException {
+    public <T> List<T> query(String sql, List<Object> params, BaseRowMapper<T> baseRowMapper) throws SQLException {
         Connection connection = DBUtils.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         try {
