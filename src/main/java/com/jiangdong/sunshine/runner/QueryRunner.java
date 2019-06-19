@@ -26,6 +26,14 @@ public class QueryRunner implements SqlOperation {
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 
+    /**
+     * @param sql
+     * @param paramsList
+     * @param baseRowMapper
+     * @param <T>
+     * @return 查询统一返回list 单个为list(0)
+     * @throws SQLException
+     */
     @Override
     public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper baseRowMapper) throws SQLException {
         return select(sql, paramsList, baseRowMapper);

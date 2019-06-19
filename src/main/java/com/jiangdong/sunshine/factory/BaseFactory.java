@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 分支测试
+ * 负责分发执行类
  */
 public class BaseFactory {
 
