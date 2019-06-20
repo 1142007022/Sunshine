@@ -16,6 +16,13 @@ public class DefaultRowMapper<T> implements BaseRowMapper {
         this.clazz = clazz;
     }
 
+    /**
+     * @param resultSet
+     * @return 对ResultSet进行结果封装
+     * @throws SQLException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
     @Override
     public List<T> mapRow(ResultSet resultSet) throws SQLException, IllegalAccessException, InstantiationException {
         List<T> result = new ArrayList<>();
