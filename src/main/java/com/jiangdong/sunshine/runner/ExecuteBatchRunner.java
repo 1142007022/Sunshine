@@ -29,11 +29,15 @@ public class ExecuteBatchRunner implements SqlOperation {
         PreparedStatement prepareStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);//获取自增主键
         if (method.getAnnotation(Rollback.class) != null) {
             try {
+                connection.setAutoCommit(false);
                 executeBatch(batchParam, prepareStatement);
                 connection.commit();
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
+                if (connection != null) {
+                    connection.rollback();
+                }
             } finally {
                 DBUtils.closeConnection(connection);
             }

@@ -37,8 +37,10 @@ public class ExecuteRunner implements SqlOperation {
                 connection.commit();
                 return true;
             } catch (SQLException e) {
-                connection.rollback();
                 e.printStackTrace();
+                if (connection != null) {
+                    connection.rollback();
+                }
             } finally {
                 DBUtils.closeConnection(connection);
             }
