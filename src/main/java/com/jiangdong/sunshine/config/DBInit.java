@@ -1,14 +1,14 @@
 package com.jiangdong.sunshine.config;
 
-import com.jiangdong.sunshine.exception.SunshineConfigException;
 import com.jiangdong.sunshine.exception.SunShineBaseException;
+import com.jiangdong.sunshine.exception.SunshineConfigException;
 import com.jiangdong.sunshine.exception.SunshineSQLException;
+import com.jiangdong.sunshine.util.StringUtils;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -52,9 +52,25 @@ public class DBInit {
         }
 
         DRIVER = prop.getProperty("jdbc.driver");
+        if (StringUtils.isEmpty(DRIVER)) {
+            throw new SunshineConfigException("'DRIVER' can not be empty!");
+        }
+
         URL = prop.getProperty("jdbc.url");
+        if (StringUtils.isEmpty(URL)) {
+            throw new SunshineConfigException("'URL' can not be empty!");
+        }
+
         NAME = prop.getProperty("jdbc.username");
+        if (StringUtils.isEmpty(NAME)) {
+            throw new SunshineConfigException("'NAME' can not be empty!");
+        }
+
         PASSWORD = prop.getProperty("jdbc.password");
+        if (StringUtils.isEmpty(PASSWORD)) {
+            throw new SunshineConfigException("'PASSWORD' can not be empty!");
+        }
+
         maxIdle = prop.get("maxIdle") != null ? (Integer) prop.get("maxIdle") : 20;
         minIdle = prop.get("minIdle") != null ? (Integer) prop.get("minIdle") : 5;
         maxWaitMillis = prop.get("maxWaitMillis") != null ? (Integer) prop.get("maxWaitMillis") : 5000;
