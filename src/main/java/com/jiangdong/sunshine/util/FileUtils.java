@@ -20,9 +20,9 @@ public class FileUtils {
         while ((line = bufferedReader.readLine()) != null) {
             stringBuilder = stringBuilder.append(line);
         }
-        int a = 0;
-        while ((a = stringBuilder.indexOf(str)) != -1) {
-            stringBuilder = stringBuilder.delete(a, a + str.length());
+        int index;
+        while ((index = stringBuilder.indexOf(str)) != -1) {
+            stringBuilder = stringBuilder.delete(index, index + str.length());
             count++;
         }
         return count;
