@@ -42,7 +42,7 @@ public class BaseFactory {
 
         if (method.getAnnotation(Select.class) != null) {
             Select select = method.getAnnotation(Select.class);
-            String sql = select.sql();//sql
+            String sql = select.sql();
             List<Object> paramsList = new ArrayList<>();
             BaseRowMapper baseRowMapper = null;
             Parameter[] methodParameters = method.getParameters();
