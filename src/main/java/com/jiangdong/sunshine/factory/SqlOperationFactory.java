@@ -41,7 +41,7 @@ public class SqlOperationFactory {
         } finally {
             lock.unlock();
         }
-       
+
         return null;
     }
 
