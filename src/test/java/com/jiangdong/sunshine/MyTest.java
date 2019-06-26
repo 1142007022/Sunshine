@@ -47,6 +47,7 @@ public class MyTest {
         }
         attributeSql.deleteCharAt(attributeSql.length() - 1);
         attributeSql.append("]'").append(" ::jsonb");
+        System.out.println(attributeSql.toString());
         System.out.println(attributeSql);
     }
 
