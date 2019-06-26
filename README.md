@@ -1,7 +1,7 @@
 # Sunshine
 
 对jdbc的封装。<br>
-1、将数据库配置文件放在src/main/resources/config.properties；<br>
+1、将数据库配置文件放在src/main/resources/config(sunshine).properties；<br>
 2、自定义一个Mapper接口，并添加相关操作；<br>
 3、添加注解，参数List使用@Param，自定义或默认的RowMapper使用@RowMapper;<br>
 4、若实体类和数据库字段不一致使用@Column；<br>
