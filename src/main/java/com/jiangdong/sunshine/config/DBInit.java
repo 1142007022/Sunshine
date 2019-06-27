@@ -53,22 +53,22 @@ public class DBInit {
 
         DRIVER = prop.getProperty("jdbc.driver");
         if (StringUtils.isEmpty(DRIVER)) {
-            throw new SunshineConfigException("'DRIVER' can not be empty!");
+            throw new SunshineConfigException("'jdbc.driver' can not be empty!");
         }
 
         URL = prop.getProperty("jdbc.url");
         if (StringUtils.isEmpty(URL)) {
-            throw new SunshineConfigException("'URL' can not be empty!");
+            throw new SunshineConfigException("'jdbc.url' can not be empty!");
         }
 
         NAME = prop.getProperty("jdbc.username");
         if (StringUtils.isEmpty(NAME)) {
-            throw new SunshineConfigException("'NAME' can not be empty!");
+            throw new SunshineConfigException("'jdbc.username' can not be empty!");
         }
 
         PASSWORD = prop.getProperty("jdbc.password");
         if (StringUtils.isEmpty(PASSWORD)) {
-            throw new SunshineConfigException("'PASSWORD' can not be empty!");
+            throw new SunshineConfigException("'jdbc.password' can not be empty!");
         }
 
         maxIdle = prop.get("maxIdle") != null ? (Integer) prop.get("maxIdle") : 20;
