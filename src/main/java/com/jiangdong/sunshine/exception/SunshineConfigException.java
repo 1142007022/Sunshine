@@ -11,7 +11,7 @@ public class SunshineConfigException extends SunShineBaseException {
     }
 
     public SunshineConfigException(){
-
+        super();
     }
 
 }
