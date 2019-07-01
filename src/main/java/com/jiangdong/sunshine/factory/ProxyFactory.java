@@ -2,7 +2,6 @@ package com.jiangdong.sunshine.factory;
 
 import com.jiangdong.sunshine.annotation.Param;
 import com.jiangdong.sunshine.annotation.RowMapper;
-import com.jiangdong.sunshine.exception.SunShineBaseException;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
