@@ -7,6 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * @program: Sunshine
+ * @description:
+ * @author: JD
+ * @create: 2019-07-03 15:57
+ **/
 public class DBUtils {
 
     private static DBInit dbInit = DBInit.getDBInit();
