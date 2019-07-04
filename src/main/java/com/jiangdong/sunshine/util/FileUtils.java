@@ -1,6 +1,7 @@
 package com.jiangdong.sunshine.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
@@ -9,7 +10,7 @@ public class FileUtils {
     /**
      * @param fileName 文件名
      * @param str      统计的字符串
-     * @return         统计一个文件中某个字符串出现的次数
+     * @return 统计一个文件中某个字符串出现的次数
      * @throws Exception
      */
     public static int getCount(String fileName, String str) throws Exception {
@@ -26,6 +27,22 @@ public class FileUtils {
             count++;
         }
         return count;
+    }
+
+    private static void getFiles(String path) {
+        File file = new File(path);
+        if (file.exists()) {
+            File[] files = file.listFiles();
+            if (files != null && files.length != 0) {
+                for (File file2 : files) {
+                    if (file2.isDirectory()) {//date文件夹
+
+                    } else {
+
+                    }
+                }
+            }
+        }
     }
 
 }
