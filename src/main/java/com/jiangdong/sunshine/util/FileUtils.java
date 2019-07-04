@@ -29,6 +29,9 @@ public class FileUtils {
         return count;
     }
 
+    /**递归输出文件下所有文件|文件夹
+     * @param path
+     */
     private static void getFiles(String path) {
         File file = new File(path);
         if (file.exists()) {
