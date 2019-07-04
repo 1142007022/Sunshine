@@ -12,6 +12,7 @@ import java.lang.annotation.*;
 @Inherited
 @Documented
 public @interface Execute {
+
     String sql();
 
     OperationTypes OperationTypes();

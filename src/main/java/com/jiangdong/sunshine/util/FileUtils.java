@@ -39,9 +39,10 @@ public class FileUtils {
             if (files != null && files.length != 0) {
                 for (File file2 : files) {
                     if (file2.isDirectory()) {//date文件夹
-
+                        System.out.println(file2.getAbsoluteFile());
+                        getFiles(file2.getAbsolutePath());
                     } else {
-
+                        System.out.println(file2.getAbsoluteFile());
                     }
                 }
             }
