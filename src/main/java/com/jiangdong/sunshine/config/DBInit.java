@@ -34,7 +34,7 @@ public class DBInit {
     private static Integer minIdle;
 
     private static Integer maxWaitMillis;
-    
+
     private static Integer initialSize;
 
     private static BasicDataSource dataSource = new BasicDataSource();

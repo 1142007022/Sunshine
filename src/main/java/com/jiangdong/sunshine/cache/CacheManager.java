@@ -7,7 +7,7 @@ import java.util.concurrent.*;
 
 /**
  * @program: Sunshine
- * @description: 缓存工具类 可根据
+ * @description: 缓存工具类
  * @author: JD
  * @create: 2019-07-05 11:32
  **/
@@ -21,13 +21,13 @@ public class CacheManager {
     /**
      * 键值对集合
      */
-    private final static Map<String, Entity> map = new ConcurrentHashMap<>();
+    private static final Map<String, Entity> map = new ConcurrentHashMap<>();
     /**
      * 定时器线程池，用于清除过期缓存
      */
-    private final static ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
-    public synchronized static void put(String key, Object data) {
+    public static void put(String key, Object data) {
         CacheManager.put(key, data, NO_TIME);
     }
 
