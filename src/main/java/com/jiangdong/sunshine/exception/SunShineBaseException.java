@@ -14,4 +14,8 @@ public class SunShineBaseException extends RuntimeException {
         super(message,cause);
     }
 
+    public String getErrorMessage(){
+        return  "message:" + this.getMessage() + ",cause:" + this.getCause();
+    }
+
 }
