@@ -14,6 +14,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * 使用dbcp2数据库连接池
+ */
 public class DBInit {
 
     public static Boolean USE_CACHE;
