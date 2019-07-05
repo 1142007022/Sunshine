@@ -1,5 +1,7 @@
 package com.jiangdong.sunshine.cache;
 
+import com.jiangdong.sunshine.entity.Entity;
+
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -64,18 +66,6 @@ public class CacheManager {
 
     public static Integer size() {
         return map.size();
-    }
-
-    private static class Entity {
-
-        public Object value;
-
-        public Future future;
-
-        public Entity(Object value, Future future) {
-            this.value = value;
-            this.future = future;
-        }
     }
 
 }
