@@ -19,13 +19,22 @@ import java.util.Properties;
  */
 public class DBInit {
 
+    public static Boolean USE_CACHE;
+
     private static String DRIVER;
+
     private static String URL;
+
     private static String NAME;
+
     private static String PASSWORD;
+
     private static Integer maxIdle;
+
     private static Integer minIdle;
+
     private static Integer maxWaitMillis;
+    
     private static Integer initialSize;
 
     private static BasicDataSource dataSource = new BasicDataSource();
@@ -72,6 +81,15 @@ public class DBInit {
         PASSWORD = prop.getProperty("jdbc.password");
         if (StringUtils.isEmpty(PASSWORD)) {
             throw new SunshineConfigException("'jdbc.password' can not be empty!");
+        }
+
+        String useCache = prop.getProperty("jdbc.cache");
+        if (StringUtils.isEmpty(useCache) || useCache.equals("false")) {
+            USE_CACHE = false;
+        }else if (useCache.equals("true")){
+            USE_CACHE = true;
+        }else {
+            throw new SunshineConfigException("'jdbc.cache'的值只允许是true或false,请检查你的格式.");
         }
 
         maxIdle = prop.get("maxIdle") != null ? (Integer) prop.get("maxIdle") : 20;
