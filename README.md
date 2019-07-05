@@ -8,9 +8,10 @@
 5、使用MapperFactory.getMapper(Class clazz)获取Mapper接口的具体实现类即可。<br>
 *****************************************************************************
 *  配置示例
-  *  jdbc.driver=com.mysql.jdbc.Driver<br>
-  *  jdbc.url=jdbc:mysql://127.0.0.1:3306/sunshine<br>
-  *  jdbc.username=root<br>
-  *  jdbc.password=123456<br>
+  *  jdbc.driver=com.mysql.jdbc.Driver //jdbc驱动<br>
+  *  jdbc.url=jdbc:mysql://127.0.0.1:3306/sunshine //数据库地址<br>
+  *  jdbc.username=root //账户名<br>
+  *  jdbc.password=123456 //密码<br>
+  *  jdbc.cache=true //是否使用缓存，默认关闭<br>
 *****************************************************************************
 *  数据库连接池默认使用dbcp2，暂不支持更改。
