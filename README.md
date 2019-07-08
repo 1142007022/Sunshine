@@ -13,5 +13,9 @@
   *  jdbc.username=root //账户名<br>
   *  jdbc.password=123456 //密码<br>
   *  jdbc.cache=true //是否使用缓存，默认关闭<br>
+  *  jdbc.maxWaitMillis=10 //初始连接数<br>
+  *  jdbc.maxIdle=20 //最大连接数,默认20<br>
+  *  jdbc.minIdle=10 //最小连接数,默认5<br>
+  *  jdbc.maxWaitMillis=5000 //最长等待时间,默认5000ms<br>
 *****************************************************************************
 *  数据库连接池默认使用dbcp2，暂不支持更改。
