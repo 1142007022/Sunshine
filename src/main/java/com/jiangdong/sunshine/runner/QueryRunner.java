@@ -18,17 +18,17 @@ import java.util.Map;
 public class QueryRunner implements SqlOperation {
 
     @Override
-    public Object execute(Object proxy, Method method, Object[] args, String sql, Boolean useCache) throws SQLException {
+    public Object execute(Object proxy, Method method, Object[] args, String sql, Boolean useCache){
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 
     @Override
-    public Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException {
+    public Object execute(Object proxy, Method method, Object[] args, String sql) {
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 
     @Override
-    public Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params) throws SQLException {
+    public Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params) {
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 

@@ -69,7 +69,7 @@ public class ExecuteRunner implements SqlOperation {
     }
 
     @Override
-    public Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params) throws SQLException {
+    public Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params) {
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 
