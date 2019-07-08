@@ -16,7 +16,7 @@ public class CacheManager {
     /**
      * 设置过期时间若为0 则不过期
      */
-    private static Long NO_TIME = 0L;
+    private static Long NO_OVER_DATE = 0L;
 
     /**
      * 键值对集合
@@ -28,7 +28,7 @@ public class CacheManager {
     private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     public static void put(String key, Object data) {
-        CacheManager.put(key, data, NO_TIME);
+        CacheManager.put(key, data, NO_OVER_DATE);
     }
 
     public static void put(String key, Object data, long time) {
