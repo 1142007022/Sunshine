@@ -1,5 +1,6 @@
 package com.jiangdong.sunshine.factory;
 
+import com.jiangdong.sunshine.config.DBInit;
 import com.jiangdong.sunshine.runner.ExecuteBatchRunner;
 import com.jiangdong.sunshine.runner.ExecuteRunner;
 import com.jiangdong.sunshine.runner.QueryRunner;
@@ -54,7 +55,8 @@ public class BaseFactory {
                     baseRowMapper = (BaseRowMapper) params.get("rowMapper");
                 }
             }
-            return queryRunner.query(sql, paramsList, baseRowMapper);
+            Boolean useCache = DBInit.USE_CACHE;
+            return queryRunner.query(sql, paramsList, baseRowMapper, useCache);
         }
 
         if (method.getAnnotation(InsertBatch.class) != null) {

@@ -1,6 +1,8 @@
 package com.jiangdong.sunshine.runner;
 
 import com.jiangdong.sunshine.annotation.Rollback;
+import com.jiangdong.sunshine.cache.CacheManager;
+import com.jiangdong.sunshine.config.DBInit;
 import com.jiangdong.sunshine.exception.SunshineSQLException;
 import com.jiangdong.sunshine.result.BaseRowMapper;
 import com.jiangdong.sunshine.sql.SqlOperation;
@@ -24,7 +26,7 @@ public class ExecuteRunner implements SqlOperation {
      * @throws SQLException
      */
     @Override
-    public Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException {
+    public Object execute(Object proxy, Method method, Object[] args, String sql, Boolean useCache) throws SQLException {
         Connection connection = DBUtils.getConnection();
         if (method.getAnnotation(Rollback.class) != null) {
             try {
@@ -62,12 +64,17 @@ public class ExecuteRunner implements SqlOperation {
     }
 
     @Override
+    public Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException {
+        return execute(proxy, method, args, sql, false);
+    }
+
+    @Override
     public Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params) throws SQLException {
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 
     @Override
-    public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper<T> baseRowMapper) {
+    public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper<T> baseRowMapper, Boolean useCache) {
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 

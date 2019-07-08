@@ -1,5 +1,6 @@
 package com.jiangdong.sunshine.runner;
 
+import com.jiangdong.sunshine.cache.CacheManager;
 import com.jiangdong.sunshine.exception.SunshineSQLException;
 import com.jiangdong.sunshine.result.BaseRowMapper;
 import com.jiangdong.sunshine.sql.SqlOperation;
@@ -15,6 +16,11 @@ import java.util.List;
 import java.util.Map;
 
 public class QueryRunner implements SqlOperation {
+
+    @Override
+    public Object execute(Object proxy, Method method, Object[] args, String sql, Boolean useCache) throws SQLException {
+        throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
+    }
 
     @Override
     public Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException {
@@ -35,7 +41,13 @@ public class QueryRunner implements SqlOperation {
      * @throws SQLException
      */
     @Override
-    public <T> List<T> query(String sql, List<Object> params, BaseRowMapper<T> baseRowMapper) throws SQLException {
+    public <T> List<T> query(String sql, List<Object> params, BaseRowMapper<T> baseRowMapper, Boolean useCache) throws SQLException {
+        if (useCache) {
+            List<T> list = CacheManager.get(sql);
+            if (CollectionUtils.isNotEmpty(list)) {
+                return list;
+            }
+        }
         Connection connection = DBUtils.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         try {
@@ -45,7 +57,11 @@ public class QueryRunner implements SqlOperation {
                 }
             }
             ResultSet resultSet = preparedStatement.executeQuery();
-            return baseRowMapper.mapRow(resultSet);
+            List<T> list = baseRowMapper.mapRow(resultSet);
+            if (useCache) {
+                CacheManager.put(sql, list);
+            }
+            return list;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {

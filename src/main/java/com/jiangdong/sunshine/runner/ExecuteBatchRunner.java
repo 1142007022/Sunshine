@@ -18,7 +18,12 @@ import java.util.Map;
 public class ExecuteBatchRunner implements SqlOperation {
 
     @Override
-    public Object execute(Object proxy, Method method, Object[] args, String sql) {
+    public Object execute(Object proxy, Method method, Object[] args, String sql, Boolean useCache) {
+        throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
+    }
+
+    @Override
+    public Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException {
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 
@@ -68,14 +73,14 @@ public class ExecuteBatchRunner implements SqlOperation {
             for (int i = 0; i < params.length; i++) {
                 prepareStatement.setObject(i + 1, params[i]);
             }
-        }else {
+        } else {
             throw new SunshineParameterException("insert batch fail!'batchParam' can not have empty value!");
         }
     }
 
 
     @Override
-    public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper<T> baseRowMapper) {
+    public <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper<T> baseRowMapper, Boolean useCache) {
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 }
