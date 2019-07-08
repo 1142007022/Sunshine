@@ -92,10 +92,10 @@ public class DBInit {
             throw new SunshineConfigException("'jdbc.cache'的值只允许是true或false,请检查你的格式.");
         }
 
-        maxIdle = prop.get("jdbc.maxIdle") != null ? (Integer) prop.get("maxIdle") : 20;
-        minIdle = prop.get("jdbc.minIdle") != null ? (Integer) prop.get("minIdle") : 5;
-        maxWaitMillis = prop.get("jdbc.maxWaitMillis") != null ? (Integer) prop.get("maxWaitMillis") : 5000;
-        initialSize = prop.get("jdbc.initialSize") != null ? (Integer) prop.get("initialSize") : 5;
+        maxIdle = prop.get("jdbc.maxIdle") != null ? (Integer) prop.get("jdbc.maxIdle") : 20;
+        minIdle = prop.get("jdbc.minIdle") != null ? (Integer) prop.get("jdbc.minIdle") : 5;
+        maxWaitMillis = prop.get("jdbc.maxWaitMillis") != null ? (Integer) prop.get("jdbc.maxWaitMillis") : 5000;
+        initialSize = prop.get("jdbc.initialSize") != null ? (Integer) prop.get("jdbc.initialSize") : 5;
 
         dataSource.setDriverClassName(DRIVER);
         dataSource.setUrl(URL);
