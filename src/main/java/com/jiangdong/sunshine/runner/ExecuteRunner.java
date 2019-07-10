@@ -1,8 +1,6 @@
 package com.jiangdong.sunshine.runner;
 
 import com.jiangdong.sunshine.annotation.Rollback;
-import com.jiangdong.sunshine.cache.CacheManager;
-import com.jiangdong.sunshine.config.DBInit;
 import com.jiangdong.sunshine.exception.SunshineSQLException;
 import com.jiangdong.sunshine.result.BaseRowMapper;
 import com.jiangdong.sunshine.sql.SqlOperation;
