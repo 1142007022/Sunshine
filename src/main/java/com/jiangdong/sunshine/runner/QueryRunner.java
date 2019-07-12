@@ -33,6 +33,7 @@ public class QueryRunner implements SqlOperation {
     }
 
     /**
+     * @param useCache 是否使用缓存
      * @param sql
      * @param params
      * @param baseRowMapper
