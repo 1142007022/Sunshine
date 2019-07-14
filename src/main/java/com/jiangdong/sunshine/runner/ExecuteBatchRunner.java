@@ -51,13 +51,12 @@ public class ExecuteBatchRunner implements SqlOperation {
             try {
                 return executeBatch(batchParam, prepareStatement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw e;
             } finally {
                 DBUtils.closeConnection(connection);
             }
         }
 
-        return null;
     }
 
     private Object executeBatch(Object[][] batchParam, PreparedStatement prepareStatement) throws SQLException {

@@ -42,7 +42,7 @@ public class QueryRunner implements SqlOperation {
      * @throws SQLException
      */
     @Override
-    public <T> List<T> query(String sql, List<Object> params, BaseRowMapper<T> baseRowMapper, Boolean useCache) throws SQLException {
+    public <T> List<T> query(String sql, List<Object> params, BaseRowMapper<T> baseRowMapper, Boolean useCache) throws SQLException, InstantiationException, IllegalAccessException {
         if (useCache) {
             List<T> list = CacheManager.get(sql);
             if (CollectionUtils.isNotEmpty(list)) {
@@ -64,13 +64,12 @@ public class QueryRunner implements SqlOperation {
             }
             return list;
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            throw e;
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            throw e;
         } finally {
             DBUtils.closeConnection(connection);
         }
-        return null;
     }
 
 }
