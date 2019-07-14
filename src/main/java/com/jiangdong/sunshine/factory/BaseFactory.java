@@ -24,7 +24,7 @@ public class BaseFactory {
     private static SqlOperation queryRunner = SqlOperationFactory.getOperation(QueryRunner.class);
     private static SqlOperation executeBatchRunner = SqlOperationFactory.getOperation(ExecuteBatchRunner.class);
 
-    public Object distribution(Object proxy, Method method, Object[] args, Map<String, Object> params) throws SQLException {
+    public Object distribution(Object proxy, Method method, Object[] args, Map<String, Object> params) throws SQLException, IllegalAccessException, InstantiationException {
 
         if (method.getAnnotation(Insert.class) != null) {
             String sql = method.getAnnotation(Insert.class).sql();
