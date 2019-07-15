@@ -13,8 +13,8 @@ public interface SqlOperation {
 
     Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException;
 
-    Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params) throws SQLException;
+    Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params);
 
-    <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper<T> baseRowMapper, Boolean useCache) throws SQLException, InstantiationException, IllegalAccessException;
+    <T> List<T> query(String sql, List<Object> paramsList, BaseRowMapper<T> baseRowMapper, Boolean useCache);
 
 }

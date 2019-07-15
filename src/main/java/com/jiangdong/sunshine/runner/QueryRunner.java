@@ -18,7 +18,7 @@ import java.util.Map;
 public class QueryRunner implements SqlOperation {
 
     @Override
-    public Object execute(Object proxy, Method method, Object[] args, String sql, Boolean useCache){
+    public Object execute(Object proxy, Method method, Object[] args, String sql, Boolean useCache) {
         throw new SunshineSQLException("执行了错误的方法,请检查是否选错实现类.");
     }
 
@@ -33,7 +33,7 @@ public class QueryRunner implements SqlOperation {
     }
 
     /**
-     * @param useCache 是否使用缓存
+     * @param useCache      是否使用缓存
      * @param sql
      * @param params
      * @param baseRowMapper
@@ -42,7 +42,7 @@ public class QueryRunner implements SqlOperation {
      * @throws SQLException
      */
     @Override
-    public <T> List<T> query(String sql, List<Object> params, BaseRowMapper<T> baseRowMapper, Boolean useCache) throws SQLException, InstantiationException, IllegalAccessException {
+    public <T> List<T> query(String sql, List<Object> params, BaseRowMapper<T> baseRowMapper, Boolean useCache) {
         if (useCache) {
             List<T> list = CacheManager.get(sql);
             if (CollectionUtils.isNotEmpty(list)) {
@@ -50,7 +50,12 @@ public class QueryRunner implements SqlOperation {
             }
         }
         Connection connection = DBUtils.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            throw new SunshineSQLException(e.getMessage(), e.getCause());
+        }
         try {
             if (CollectionUtils.isNotEmpty(params)) {
                 for (int i = 0; i < params.size(); i++) {
@@ -63,12 +68,14 @@ public class QueryRunner implements SqlOperation {
                 CacheManager.put(sql, list);
             }
             return list;
-        } catch (IllegalAccessException e) {
-            throw e;
-        } catch (InstantiationException e) {
-            throw e;
+        } catch (Exception e) {
+            throw new SunshineSQLException(e.getMessage(), e.getCause());
         } finally {
-            DBUtils.closeConnection(connection);
+            try {
+                DBUtils.closeConnection(connection);
+            } catch (SQLException e) {
+                throw new SunshineSQLException(e.getMessage(), e.getCause());
+            }
         }
     }
 

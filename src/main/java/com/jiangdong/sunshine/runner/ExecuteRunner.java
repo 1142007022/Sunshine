@@ -24,7 +24,7 @@ public class ExecuteRunner implements SqlOperation {
      * @throws SQLException
      */
     @Override
-    public Object execute(Object proxy, Method method, Object[] args, String sql, Boolean useCache) throws SQLException {
+    public Object execute(Object proxy, Method method, Object[] args, String sql, Boolean useCache) {
         Connection connection = DBUtils.getConnection();
         if (method.getAnnotation(Rollback.class) != null) {
             try {
@@ -39,10 +39,18 @@ public class ExecuteRunner implements SqlOperation {
             } catch (SQLException e) {
                 e.printStackTrace();
                 if (connection != null) {
-                    connection.rollback();
+                    try {
+                        connection.rollback();
+                    } catch (SQLException ex) {
+                        throw new SunshineSQLException(e.getMessage() + ",事务回滚异常!", e.getCause());
+                    }
                 }
             } finally {
-                DBUtils.closeConnection(connection);
+                try {
+                    DBUtils.closeConnection(connection);
+                } catch (SQLException e) {
+                    throw new SunshineSQLException(e.getMessage() + ",关闭数据库连接异常!", e.getCause());
+                }
             }
         } else {
             try {
@@ -52,9 +60,13 @@ public class ExecuteRunner implements SqlOperation {
                 }
                 return preparedStatement.execute();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new SunshineSQLException(e.getMessage(), e.getCause());
             } finally {
-                DBUtils.closeConnection(connection);
+                try {
+                    DBUtils.closeConnection(connection);
+                } catch (SQLException e) {
+                    throw new SunshineSQLException(e.getMessage() + ",关闭数据库连接异常!", e.getCause());
+                }
             }
         }
 
@@ -62,7 +74,7 @@ public class ExecuteRunner implements SqlOperation {
     }
 
     @Override
-    public Object execute(Object proxy, Method method, Object[] args, String sql) throws SQLException {
+    public Object execute(Object proxy, Method method, Object[] args, String sql) {
         return execute(proxy, method, args, sql, false);
     }
 

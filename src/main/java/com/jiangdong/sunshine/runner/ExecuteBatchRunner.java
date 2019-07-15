@@ -28,10 +28,15 @@ public class ExecuteBatchRunner implements SqlOperation {
     }
 
     @Override
-    public Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params) throws SQLException {
+    public Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params) {
         Connection connection = DBUtils.getConnection();
         Object[][] batchParam = (Object[][]) params.get("batchParam");//实际参数值
-        PreparedStatement prepareStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);//获取自增主键
+        PreparedStatement prepareStatement = null;//获取自增主键
+        try {
+            prepareStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        } catch (SQLException e) {
+            throw new SunshineSQLException(e.getMessage(), e.getCause());
+        }
         if (method.getAnnotation(Rollback.class) != null) {
             try {
                 connection.setAutoCommit(false);
@@ -39,21 +44,32 @@ public class ExecuteBatchRunner implements SqlOperation {
                 connection.commit();
                 return true;
             } catch (SQLException e) {
-                e.printStackTrace();
                 if (connection != null) {
-                    connection.rollback();
+                    try {
+                        connection.rollback();
+                    } catch (SQLException ex) {
+                        throw new SunshineSQLException(e.getMessage() + "事务回滚异常!", e.getCause());
+                    }
                 }
             } finally {
-                DBUtils.closeConnection(connection);
+                try {
+                    DBUtils.closeConnection(connection);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             return true;
         } else {
             try {
                 return executeBatch(batchParam, prepareStatement);
             } catch (SQLException e) {
-                throw e;
+                throw new SunshineSQLException(e.getMessage(), e.getCause());
             } finally {
-                DBUtils.closeConnection(connection);
+                try {
+                    DBUtils.closeConnection(connection);
+                } catch (SQLException e) {
+                    throw new SunshineSQLException(e.getMessage() + ",关闭数据库连接异常!", e.getCause());
+                }
             }
         }
 
