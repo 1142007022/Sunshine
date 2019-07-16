@@ -13,6 +13,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 2019.7.16 添加了根据Rollback设置的class进行事务回滚
+ */
 public class ExecuteRunner implements SqlOperation {
 
     /**
