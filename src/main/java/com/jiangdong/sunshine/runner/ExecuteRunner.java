@@ -27,6 +27,7 @@ public class ExecuteRunner implements SqlOperation {
     public Object execute(Object proxy, Method method, Object[] args, String sql, Boolean useCache) {
         Connection connection = DBUtils.getConnection();
         if (method.getAnnotation(Rollback.class) != null) {
+            Rollback rollback = method.getAnnotation(Rollback.class);
             try {
                 connection.setAutoCommit(false);
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -38,10 +39,10 @@ public class ExecuteRunner implements SqlOperation {
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
-                if (connection != null) {
+                if (connection != null && rollback.rollBackFor().isAssignableFrom(e.getClass())) {
                     try {
                         connection.rollback();
-                    } catch (SQLException ex) {
+                    } catch (Exception ex) {
                         throw new SunshineSQLException(e.getMessage() + ",事务回滚异常!", e.getCause());
                     }
                 }

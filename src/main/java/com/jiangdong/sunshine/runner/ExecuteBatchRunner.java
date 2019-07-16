@@ -43,8 +43,9 @@ public class ExecuteBatchRunner implements SqlOperation {
                 executeBatch(batchParam, prepareStatement);
                 connection.commit();
                 return true;
-            } catch (SQLException e) {
-                if (connection != null) {
+            } catch (Exception e) {
+                Rollback rollback = method.getAnnotation(Rollback.class);
+                if (connection != null && rollback.rollBackFor().isAssignableFrom(e.getClass())) {
                     try {
                         connection.rollback();
                     } catch (SQLException ex) {
