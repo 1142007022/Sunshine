@@ -2,6 +2,9 @@ package com.jiangdong.sunshine.factory;
 
 import java.lang.reflect.Proxy;
 
+/**
+ * Sunshine起点
+ */
 public class MapperFactory {
 
     /**
