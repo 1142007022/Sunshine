@@ -50,7 +50,7 @@ public class QueryRunner implements SqlOperation {
             }
         }
         Connection connection = DBUtils.getConnection();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement(sql);
         } catch (SQLException e) {
