@@ -1,5 +1,8 @@
 package com.jiangdong.sunshine.enums;
 
+/**
+ * 操作类型
+ */
 public enum  OperationTypes {
 
     INSERT,
