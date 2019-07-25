@@ -30,7 +30,7 @@ public class ProxyFactory implements InvocationHandler {
     }
 
     /**
-     * @param proxy  代理的真实对象 注意和target区分
+     * @param proxy 代理的真实对象 注意和target区分
      * @param method
      * @param args
      * @return
