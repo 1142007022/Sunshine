@@ -3,6 +3,9 @@ package com.jiangdong.sunshine.util;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ *
+ */
 public class CollectionUtils {
 
     public static boolean isEmpty(Collection<?> collection) {
