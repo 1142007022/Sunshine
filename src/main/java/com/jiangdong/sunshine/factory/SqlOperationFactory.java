@@ -8,6 +8,9 @@ import com.jiangdong.sunshine.sql.SqlOperation;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ *
+ */
 public class SqlOperationFactory {
 
     private static ExecuteRunner executeRunner;
