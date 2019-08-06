@@ -9,7 +9,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- *
+ *根据class进行返回执行类  使用lock保证线程安全
  */
 public class SqlOperationFactory {
 
