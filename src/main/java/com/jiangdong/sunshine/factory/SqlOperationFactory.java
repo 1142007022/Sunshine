@@ -48,7 +48,6 @@ public class SqlOperationFactory {
             lock.unlock();
             log.log(Level.INFO,"释放锁成功");
         }
-
         return null;
     }
 
