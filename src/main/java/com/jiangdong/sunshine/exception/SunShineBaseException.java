@@ -1,5 +1,8 @@
 package com.jiangdong.sunshine.exception;
 
+/**
+ * BaseException
+ */
 public class SunShineBaseException extends RuntimeException {
 
     public SunShineBaseException(){
