@@ -1,9 +1,13 @@
 package com.jiangdong.sunshine.spring;
 
+import com.jiangdong.sunshine.annotation.Mapper;
+import com.jiangdong.sunshine.exception.SunShineBaseException;
+import com.jiangdong.sunshine.exception.SunshineConfigException;
 import com.jiangdong.sunshine.exception.SunshineSpringException;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.URL;
@@ -11,10 +15,52 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public abstract class SunShineSpringContext {
+
+    private static Properties prop = new Properties();
+
+    private static String scanPackage = "";
+
+    public static List<Class<?>> classes;
+
+    static {
+
+        try {
+
+            File config = new File("src/main/resources/config.properties");
+            File sunshine = new File("src/main/resources/sunshine.properties");
+
+            if (config.exists()) {
+                FileInputStream fileInputStream = new FileInputStream(config);
+                prop.load(fileInputStream);
+            } else if (sunshine.exists()) {
+                FileInputStream fileInputStream = new FileInputStream(config);
+                prop.load(fileInputStream);
+            } else {
+                throw new SunshineConfigException();
+            }
+
+        } catch (SunshineConfigException e) {
+            throw new SunshineConfigException("配置文件不存在或命名有误," + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new SunShineBaseException("配置文件加载异常," + e.getMessage(), e);
+        }
+
+        scanPackage = (String) prop.get("sunshine.spring.scanPackage");
+
+        List<Class<?>> list = getClasses(scanPackage);
+
+        for (Class clazz : list) {
+            if (clazz.getAnnotation(Mapper.class) != null) {
+                classes.add(clazz);
+            }
+        }
+
+    }
 
     public abstract Object getBean(Class clazz);
 
