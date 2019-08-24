@@ -1,6 +1,6 @@
 package com.jiangdong.sunshine.cache;
 
-import com.jiangdong.sunshine.entity.Entity;
+import com.jiangdong.sunshine.entity.CacheEntity;
 
 import java.util.Map;
 import java.util.concurrent.*;
@@ -21,7 +21,7 @@ public class CacheManager {
     /**
      * 键值对集合
      */
-    private static final Map<String, Entity> map = new ConcurrentHashMap<>();
+    private static final Map<String, CacheEntity> map = new ConcurrentHashMap<>();
     /**
      * 定时器线程池，用于清除过期缓存
      */
@@ -40,28 +40,28 @@ public class CacheManager {
                     map.remove(key);
                 }
             }, time, TimeUnit.MILLISECONDS);
-            map.put(key, new Entity(data, future));
+            map.put(key, new CacheEntity(data, future));
         } else {
-            map.put(key, new Entity(data, null));
+            map.put(key, new CacheEntity(data, null));
         }
     }
 
     public static <T> T get(String key) {
-        Entity entity = map.get(key);
-        return entity == null ? null : (T) entity.value;
+        CacheEntity cacheEntity = map.get(key);
+        return cacheEntity == null ? null : (T) cacheEntity.value;
     }
 
     public static <T> T remove(String key) {
         //清除原缓存数据
-        Entity entity = map.remove(key);
-        if (entity == null) {
+        CacheEntity cacheEntity = map.remove(key);
+        if (cacheEntity == null) {
             return null;
         }
         //清除原键值对定时器
-        if (entity.future != null) {
-            entity.future.cancel(true);
+        if (cacheEntity.future != null) {
+            cacheEntity.future.cancel(true);
         }
-        return (T) entity.value;
+        return (T) cacheEntity.value;
     }
 
     public static Integer size() {

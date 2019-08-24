@@ -9,13 +9,13 @@ import java.util.concurrent.Future;
  * @author: JD
  * @create: 2019-07-05 11:58
  **/
-public class Entity implements Serializable {
+public class CacheEntity implements Serializable {
 
     public Object value;
 
     public Future future;
 
-    public Entity(Object value, Future future) {
+    public CacheEntity(Object value, Future future) {
         this.value = value;
         this.future = future;
     }
