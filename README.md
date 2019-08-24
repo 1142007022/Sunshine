@@ -17,5 +17,6 @@
   *  jdbc.maxIdle=20 //最大连接数,默认20<br>
   *  jdbc.minIdle=10 //最小连接数,默认5<br>
   *  jdbc.maxWaitMillis=5000 //最长等待时间,默认5000ms<br>
+  *  sunshine.spring.scanPackage=com.sunshine//扫描的包<br>
 *****************************************************************************
 *  数据库连接池默认使用dbcp2，暂不支持更改。
