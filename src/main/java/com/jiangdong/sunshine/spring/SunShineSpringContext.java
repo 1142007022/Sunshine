@@ -4,6 +4,7 @@ import com.jiangdong.sunshine.annotation.Mapper;
 import com.jiangdong.sunshine.exception.SunShineBaseException;
 import com.jiangdong.sunshine.exception.SunshineConfigException;
 import com.jiangdong.sunshine.exception.SunshineSpringException;
+import com.jiangdong.sunshine.util.StringUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -51,12 +52,12 @@ public abstract class SunShineSpringContext {
         }
 
         scanPackage = (String) prop.get("sunshine.spring.scanPackage");
-
-        List<Class<?>> list = getClasses(scanPackage);
-
-        for (Class clazz : list) {
-            if (clazz.getAnnotation(Mapper.class) != null) {
-                classes.add(clazz);
+        if (StringUtils.isNotEmpty(scanPackage)) {
+            List<Class<?>> list = getClasses(scanPackage);
+            for (Class clazz : list) {
+                if (clazz.getAnnotation(Mapper.class) != null) {
+                    classes.add(clazz);
+                }
             }
         }
 
