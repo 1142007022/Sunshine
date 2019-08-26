@@ -47,7 +47,7 @@ public abstract class SunShineSpringContext {
 
         } catch (SunshineConfigException e) {
             throw new SunshineConfigException("配置文件不存在或命名有误," + e.getMessage(), e);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new SunShineBaseException("配置文件加载异常," + e.getMessage(), e);
         }
 
