@@ -34,7 +34,7 @@ public class ExecuteBatchRunner implements SqlOperation {
     public Object executeBatch(Object proxy, Method method, Object[] args, String sql, Map<String, Object> params) {
         Connection connection = DBUtils.getConnection();
         Object[][] batchParam = (Object[][]) params.get("batchParam");//实际参数值
-        PreparedStatement prepareStatement = null;//获取自增主键
+        PreparedStatement prepareStatement;//获取自增主键
         try {
             prepareStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException e) {
