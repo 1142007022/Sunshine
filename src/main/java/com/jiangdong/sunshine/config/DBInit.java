@@ -38,6 +38,7 @@ public class DBInit {
     private static Integer initialSize;
 
     private static BasicDataSource dataSource = new BasicDataSource();
+
     private static Properties prop = new Properties();
 
     static {
