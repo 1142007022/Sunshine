@@ -1,7 +1,9 @@
 package com.jiangdong.sunshine.cache;
 
 import com.jiangdong.sunshine.entity.CacheEntity;
+import com.jiangdong.sunshine.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -65,7 +67,10 @@ public class CacheManager {
     }
 
     public static Integer size() {
-        return map.size();
+        if (!CollectionUtils.isEmpty(map)){
+            return map.size();
+        }
+        return 0;
     }
 
 }
