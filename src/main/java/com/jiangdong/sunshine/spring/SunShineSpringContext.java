@@ -60,7 +60,6 @@ public abstract class SunShineSpringContext {
                 }
             }
         }
-
     }
 
     public abstract Object getBean(Class clazz);
