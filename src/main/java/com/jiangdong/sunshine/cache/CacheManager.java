@@ -2,6 +2,7 @@ package com.jiangdong.sunshine.cache;
 
 import com.jiangdong.sunshine.entity.CacheEntity;
 import com.jiangdong.sunshine.util.CollectionUtils;
+import com.jiangdong.sunshine.util.StringUtils;
 
 import java.util.Collections;
 import java.util.Map;
@@ -34,7 +35,9 @@ public class CacheManager {
     }
 
     public static void put(String key, Object data, long time) {
-        CacheManager.remove(key);
+        if (StringUtils.isNotEmpty(key) && map.containsKey(key)) {
+            CacheManager.remove(key);
+        }
         if (time > 0) {
             Future future = executor.schedule(new Runnable() {
                 @Override
