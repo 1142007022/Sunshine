@@ -11,6 +11,8 @@ import java.util.concurrent.Future;
  **/
 public class CacheEntity implements Serializable {
 
+    private static final long serialVersionUID = 8735132092273200831L;
+
     public Object value;
 
     public Future future;
